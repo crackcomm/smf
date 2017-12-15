@@ -37,6 +37,16 @@ wal_writer_node::wal_writer_node(wal_writer_node_opts &&opts)
                      sm::description("Number of bytes writen to disk")),
      sm::make_derive("total_rolls", stats_.total_rolls,
                      sm::description("Number of times, we rolled the log"))});
+
+  body_timeout.set_callback([this] {
+    auto l = lease_;
+    if (l) {
+      return serialize_writes_.wait(1)
+        .then([l] { return l.flush(); })
+        .finally([this, l] { serialize_writes_.signal(1); });
+    }
+  });
+  flush_timeout_.arm(opts_.writer_flush_period);
 }
 wal_writer_node::~wal_writer_node() {}
 

@@ -6,6 +6,7 @@
 #include <core/metrics_registration.hh>
 #include <core/semaphore.hh>
 #include <core/sstring.hh>
+#include <core/timer.hh>
 // generated
 #include "flatbuffers/wal_generated.h"
 // smf
@@ -106,6 +107,7 @@ class wal_writer_node {
   seastar::semaphore                            serialize_writes_{1};
   wal_writer_node_stats                         stats_{};
   seastar::metrics::metric_groups               metrics_{};
+  seastar::timer<>                              flush_timeout_;
 };
 
 }  // namespace smf
