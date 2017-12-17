@@ -11,6 +11,7 @@
 // TODO(need a partition scanner, etc)
 #include "filesystem/wal_requests.h"
 #include "filesystem/wal_write_projection.h"
+#include "utils/checks/disk.h"
 
 namespace smf {
 write_ahead_log::write_ahead_log(wal_opts _opts)
@@ -55,15 +56,17 @@ seastar::future<wal_read_reply> write_ahead_log::get(wal_read_request r) {
 
 seastar::future<> write_ahead_log::open() {
   LOG_INFO("starting: {}", opts);
-  return seastar::make_ready_future<>();
-  auto dir = opts.directory;
-  // TODO(agallego)
-  // missing partition scanning
-  return file_exists(dir).then([dir](bool exists) {
-    if (exists) { return seastar::make_ready_future<>(); }
-    return seastar::make_directory(dir).then_wrapped(
-      [](auto _) { return seastar::make_ready_future<>(); });
-  });
+  if (seastar::engine().cpu_id() == 0) {
+    auto dir = opts.directory;
+    return file_exists(dir).then([dir](bool exists) {
+      if (exists) { return seastar::make_ready_future<>(); }
+      LOG_INFO("Creating log directory: {}", dir);
+      return seastar::make_directory(dir).then([dir] {
+        LOG_INFO("Checking for supported filesystems");
+        return smf::checks::disk::check(dir);
+      });
+    });
+  }
 }
 
 seastar::future<> write_ahead_log::close() {
