@@ -47,11 +47,17 @@ class wal_page_cache {
 
 
   future<page_t> cache_read(seastar::lw_shared_ptr<seastar::file> f,
-                             // this inode is the static_cast ( stat.ino_t )
-                             uint64_t                          inode,
-                             uint32_t                          page,
-                             const seastar::io_priority_class &pc);
+                            // this inode is the static_cast ( stat.ino_t )
+                            uint64_t                          inode,
+                            uint32_t                          page,
+                            const seastar::io_priority_class &pc);
 
+
+  future<> evict_page(uint64_t inode, uint32_t page);
+
+ private:
+  seastar::future<chunk_t> fetch_page(const uint32_t &                  page,
+                                      const seastar::io_priority_class &pc);
 
  private:
   wal_page_cache() = default;

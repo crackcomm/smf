@@ -43,8 +43,6 @@ class wal_clock_pro_cache {
 
   /// \breif fetch exactly one page from disk w/ dma_alignment() so that
   /// we don't pay the penalty of fetching 2 pages and discarding one
-  seastar::future<chunk_t> fetch_page(const uint32_t &                  page,
-                                      const seastar::io_priority_class &pc);
 
   /// \brief perform the clock-pro caching and eviction techniques
   /// and then return a ptr to the page
