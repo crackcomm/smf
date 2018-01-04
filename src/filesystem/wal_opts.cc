@@ -17,15 +17,12 @@ wal_opts::wal_opts(wal_opts &&o) noexcept
 wal_opts::wal_opts(const wal_opts &o)
   : directory(o.directory), writer_flush_period(o.writer_flush_period) {}
 
-wal_opts &wal_opts::operator=(const wal_opts &o) {
-  directory           = o.directory;
-  writer_flush_period = o.writer_flush_period;
-  return *this;
-}
-
 std::ostream &operator<<(std::ostream &o, const wal_opts &opts) {
-  o << "wal_opts{directory=" << opts.directory
-    << ", writer_flush_period=" << opts.writer_flush_period << "}";
+  o << "wal_opts{directory=" << opts.directory << ", writer_flush_period="
+    << std::chrono::duration_cast<std::chrono::milliseconds>(
+         opts.writer_flush_period)
+         .count()
+    << "}";
   return o;
 }
 }  // namespace smf
