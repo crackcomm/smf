@@ -69,3 +69,9 @@ src/test/*_unit_test
 # docs
 Doxyfile
 vendor/
+
+# node.js
+coverage/
+node_modules/
+package-lock.json
+yarn.lock
