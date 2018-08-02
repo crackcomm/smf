@@ -71,6 +71,7 @@ Doxyfile
 vendor/
 
 # node.js
+dist/
 coverage/
 node_modules/
 package-lock.json

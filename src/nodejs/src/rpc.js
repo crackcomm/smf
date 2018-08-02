@@ -4,13 +4,7 @@
  * @const
  * @namespace
  */
-var smf = smf || {};
-
-/**
- * @const
- * @namespace
- */
-smf.rpc = smf.rpc || {};
+var rpc = module.exports = {};
 
 /**
  * \brief: headers that are stored in an int
@@ -21,7 +15,7 @@ smf.rpc = smf.rpc || {};
  *
  * @enum
  */
-smf.rpc.compression_flags = {
+rpc.compression_flags = {
   none: 0,
   disabled: 1,
   zstd: 2,
@@ -31,7 +25,7 @@ smf.rpc.compression_flags = {
 /**
  * @enum
  */
-smf.rpc.header_bit_flags = {
+rpc.header_bit_flags = {
   has_payload_headers: 1
 };
 
@@ -47,7 +41,7 @@ smf.rpc.header_bit_flags = {
  *
  * @constructor
  */
-smf.rpc.header = function() {
+rpc.header = function () {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -62,26 +56,34 @@ smf.rpc.header = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {smf.rpc.header}
+ * @returns {rpc.header}
  */
-smf.rpc.header.prototype.__init = function(i, bb) {
+rpc.header.prototype.__init = function (i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
 };
 
 /**
- * @returns {smf.rpc.compression_flags}
+ * @param {flatbuffers.ByteBuffer} bb
+ * @returns {rpc.header}
  */
-smf.rpc.header.prototype.compression = function() {
-  return /** @type {smf.rpc.compression_flags} */ (this.bb.readInt8(this.bb_pos));
+rpc.header.getRootAsHeader = function (bb) {
+  return (new rpc.header).__init(0, bb);
 };
 
 /**
- * @returns {smf.rpc.header_bit_flags}
+ * @returns {rpc.compression_flags}
  */
-smf.rpc.header.prototype.bitflags = function() {
-  return /** @type {smf.rpc.header_bit_flags} */ (this.bb.readInt8(this.bb_pos + 1));
+rpc.header.prototype.compression = function () {
+  return /** @type {rpc.compression_flags} */ (this.bb.readInt8(this.bb_pos));
+};
+
+/**
+ * @returns {rpc.header_bit_flags}
+ */
+rpc.header.prototype.bitflags = function () {
+  return /** @type {rpc.header_bit_flags} */ (this.bb.readInt8(this.bb_pos + 1));
 };
 
 /**
@@ -90,7 +92,7 @@ smf.rpc.header.prototype.bitflags = function() {
  *
  * @returns {number}
  */
-smf.rpc.header.prototype.session = function() {
+rpc.header.prototype.session = function () {
   return this.bb.readUint16(this.bb_pos + 2);
 };
 
@@ -99,7 +101,7 @@ smf.rpc.header.prototype.session = function() {
  *
  * @returns {number}
  */
-smf.rpc.header.prototype.size = function() {
+rpc.header.prototype.size = function () {
   return this.bb.readUint32(this.bb_pos + 4);
 };
 
@@ -108,7 +110,7 @@ smf.rpc.header.prototype.size = function() {
  *
  * @returns {number}
  */
-smf.rpc.header.prototype.checksum = function() {
+rpc.header.prototype.checksum = function () {
   return this.bb.readUint32(this.bb_pos + 8);
 };
 
@@ -131,21 +133,21 @@ smf.rpc.header.prototype.checksum = function() {
  *
  * @returns {number}
  */
-smf.rpc.header.prototype.meta = function() {
+rpc.header.prototype.meta = function () {
   return this.bb.readUint32(this.bb_pos + 12);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {smf.rpc.compression_flags} compression
- * @param {smf.rpc.header_bit_flags} bitflags
+ * @param {rpc.compression_flags} compression
+ * @param {rpc.header_bit_flags} bitflags
  * @param {number} session
  * @param {number} size
  * @param {number} checksum
  * @param {number} meta
  * @returns {flatbuffers.Offset}
  */
-smf.rpc.header.createheader = function(builder, compression, bitflags, session, size, checksum, meta) {
+rpc.header.createheader = function (builder, compression, bitflags, session, size, checksum, meta) {
   builder.prep(4, 16);
   builder.writeInt32(meta);
   builder.writeInt32(checksum);
@@ -163,7 +165,7 @@ smf.rpc.header.createheader = function(builder, compression, bitflags, session, 
  *
  * @constructor
  */
-smf.rpc.dynamic_header = function() {
+rpc.dynamic_header = function () {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -178,9 +180,9 @@ smf.rpc.dynamic_header = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {smf.rpc.dynamic_header}
+ * @returns {rpc.dynamic_header}
  */
-smf.rpc.dynamic_header.prototype.__init = function(i, bb) {
+rpc.dynamic_header.prototype.__init = function (i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -188,11 +190,11 @@ smf.rpc.dynamic_header.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {smf.rpc.dynamic_header=} obj
- * @returns {smf.rpc.dynamic_header}
+ * @param {rpc.dynamic_header=} obj
+ * @returns {rpc.dynamic_header}
  */
-smf.rpc.dynamic_header.getRootAsdynamic_header = function(bb, obj) {
-  return (obj || new smf.rpc.dynamic_header).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+rpc.dynamic_header.getRootAsdynamic_header = function (bb, obj) {
+  return (obj || new rpc.dynamic_header).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
@@ -202,7 +204,7 @@ smf.rpc.dynamic_header.getRootAsdynamic_header = function(bb, obj) {
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-smf.rpc.dynamic_header.prototype.key = function(optionalEncoding) {
+rpc.dynamic_header.prototype.key = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
 };
@@ -211,7 +213,7 @@ smf.rpc.dynamic_header.prototype.key = function(optionalEncoding) {
  * @param {flatbuffers.Encoding=} optionalEncoding
  * @returns {string|Uint8Array|null}
  */
-smf.rpc.dynamic_header.prototype.value = function(optionalEncoding) {
+rpc.dynamic_header.prototype.value = function (optionalEncoding) {
   var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.__string(this.bb_pos + offset, optionalEncoding) : null;
 };
@@ -219,7 +221,7 @@ smf.rpc.dynamic_header.prototype.value = function(optionalEncoding) {
 /**
  * @param {flatbuffers.Builder} builder
  */
-smf.rpc.dynamic_header.startdynamic_header = function(builder) {
+rpc.dynamic_header.startdynamic_header = function (builder) {
   builder.startObject(2);
 };
 
@@ -227,7 +229,7 @@ smf.rpc.dynamic_header.startdynamic_header = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} keyOffset
  */
-smf.rpc.dynamic_header.addKey = function(builder, keyOffset) {
+rpc.dynamic_header.addKey = function (builder, keyOffset) {
   builder.addFieldOffset(0, keyOffset, 0);
 };
 
@@ -235,7 +237,7 @@ smf.rpc.dynamic_header.addKey = function(builder, keyOffset) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} valueOffset
  */
-smf.rpc.dynamic_header.addValue = function(builder, valueOffset) {
+rpc.dynamic_header.addValue = function (builder, valueOffset) {
   builder.addFieldOffset(1, valueOffset, 0);
 };
 
@@ -243,7 +245,7 @@ smf.rpc.dynamic_header.addValue = function(builder, valueOffset) {
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-smf.rpc.dynamic_header.enddynamic_header = function(builder) {
+rpc.dynamic_header.enddynamic_header = function (builder) {
   var offset = builder.endObject();
   builder.requiredField(offset, 4); // key
   return offset;
@@ -252,7 +254,7 @@ smf.rpc.dynamic_header.enddynamic_header = function(builder) {
 /**
  * @constructor
  */
-smf.rpc.payload_headers = function() {
+rpc.payload_headers = function () {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -267,9 +269,9 @@ smf.rpc.payload_headers = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {smf.rpc.payload_headers}
+ * @returns {rpc.payload_headers}
  */
-smf.rpc.payload_headers.prototype.__init = function(i, bb) {
+rpc.payload_headers.prototype.__init = function (i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -277,29 +279,29 @@ smf.rpc.payload_headers.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {smf.rpc.payload_headers=} obj
- * @returns {smf.rpc.payload_headers}
+ * @param {rpc.payload_headers=} obj
+ * @returns {rpc.payload_headers}
  */
-smf.rpc.payload_headers.getRootAspayload_headers = function(bb, obj) {
-  return (obj || new smf.rpc.payload_headers).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+rpc.payload_headers.getRootAspayload_headers = function (bb, obj) {
+  return (obj || new rpc.payload_headers).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * Headers for forward compat.
  *
  * @param {number} index
- * @param {smf.rpc.dynamic_header=} obj
- * @returns {smf.rpc.dynamic_header}
+ * @param {rpc.dynamic_header=} obj
+ * @returns {rpc.dynamic_header}
  */
-smf.rpc.payload_headers.prototype.dynamicHeaders = function(index, obj) {
+rpc.payload_headers.prototype.dynamicHeaders = function (index, obj) {
   var offset = this.bb.__offset(this.bb_pos, 4);
-  return offset ? (obj || new smf.rpc.dynamic_header).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
+  return offset ? (obj || new rpc.dynamic_header).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos + offset) + index * 4), this.bb) : null;
 };
 
 /**
  * @returns {number}
  */
-smf.rpc.payload_headers.prototype.dynamicHeadersLength = function() {
+rpc.payload_headers.prototype.dynamicHeadersLength = function () {
   var offset = this.bb.__offset(this.bb_pos, 4);
   return offset ? this.bb.__vector_len(this.bb_pos + offset) : 0;
 };
@@ -309,7 +311,7 @@ smf.rpc.payload_headers.prototype.dynamicHeadersLength = function() {
  *
  * @returns {number}
  */
-smf.rpc.payload_headers.prototype.size = function() {
+rpc.payload_headers.prototype.size = function () {
   var offset = this.bb.__offset(this.bb_pos, 6);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
@@ -317,23 +319,23 @@ smf.rpc.payload_headers.prototype.size = function() {
 /**
  * @returns {number}
  */
-smf.rpc.payload_headers.prototype.checksum = function() {
+rpc.payload_headers.prototype.checksum = function () {
   var offset = this.bb.__offset(this.bb_pos, 8);
   return offset ? this.bb.readUint32(this.bb_pos + offset) : 0;
 };
 
 /**
- * @returns {smf.rpc.compression_flags}
+ * @returns {rpc.compression_flags}
  */
-smf.rpc.payload_headers.prototype.compression = function() {
+rpc.payload_headers.prototype.compression = function () {
   var offset = this.bb.__offset(this.bb_pos, 10);
-  return offset ? /** @type {smf.rpc.compression_flags} */ (this.bb.readInt8(this.bb_pos + offset)) : smf.rpc.compression_flags.none;
+  return offset ? /** @type {rpc.compression_flags} */ (this.bb.readInt8(this.bb_pos + offset)) : rpc.compression_flags.none;
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
-smf.rpc.payload_headers.startpayload_headers = function(builder) {
+rpc.payload_headers.startpayload_headers = function (builder) {
   builder.startObject(4);
 };
 
@@ -341,7 +343,7 @@ smf.rpc.payload_headers.startpayload_headers = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @param {flatbuffers.Offset} dynamicHeadersOffset
  */
-smf.rpc.payload_headers.addDynamicHeaders = function(builder, dynamicHeadersOffset) {
+rpc.payload_headers.addDynamicHeaders = function (builder, dynamicHeadersOffset) {
   builder.addFieldOffset(0, dynamicHeadersOffset, 0);
 };
 
@@ -350,7 +352,7 @@ smf.rpc.payload_headers.addDynamicHeaders = function(builder, dynamicHeadersOffs
  * @param {Array.<flatbuffers.Offset>} data
  * @returns {flatbuffers.Offset}
  */
-smf.rpc.payload_headers.createDynamicHeadersVector = function(builder, data) {
+rpc.payload_headers.createDynamicHeadersVector = function (builder, data) {
   builder.startVector(4, data.length, 4);
   for (var i = data.length - 1; i >= 0; i--) {
     builder.addOffset(data[i]);
@@ -362,7 +364,7 @@ smf.rpc.payload_headers.createDynamicHeadersVector = function(builder, data) {
  * @param {flatbuffers.Builder} builder
  * @param {number} numElems
  */
-smf.rpc.payload_headers.startDynamicHeadersVector = function(builder, numElems) {
+rpc.payload_headers.startDynamicHeadersVector = function (builder, numElems) {
   builder.startVector(4, numElems, 4);
 };
 
@@ -370,7 +372,7 @@ smf.rpc.payload_headers.startDynamicHeadersVector = function(builder, numElems) 
  * @param {flatbuffers.Builder} builder
  * @param {number} size
  */
-smf.rpc.payload_headers.addSize = function(builder, size) {
+rpc.payload_headers.addSize = function (builder, size) {
   builder.addFieldInt32(1, size, 0);
 };
 
@@ -378,23 +380,23 @@ smf.rpc.payload_headers.addSize = function(builder, size) {
  * @param {flatbuffers.Builder} builder
  * @param {number} checksum
  */
-smf.rpc.payload_headers.addChecksum = function(builder, checksum) {
+rpc.payload_headers.addChecksum = function (builder, checksum) {
   builder.addFieldInt32(2, checksum, 0);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
- * @param {smf.rpc.compression_flags} compression
+ * @param {rpc.compression_flags} compression
  */
-smf.rpc.payload_headers.addCompression = function(builder, compression) {
-  builder.addFieldInt8(3, compression, smf.rpc.compression_flags.none);
+rpc.payload_headers.addCompression = function (builder, compression) {
+  builder.addFieldInt8(3, compression, rpc.compression_flags.none);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-smf.rpc.payload_headers.endpayload_headers = function(builder) {
+rpc.payload_headers.endpayload_headers = function (builder) {
   var offset = builder.endObject();
   return offset;
 };
@@ -407,7 +409,7 @@ smf.rpc.payload_headers.endpayload_headers = function(builder) {
  *
  * @constructor
  */
-smf.rpc.null_type = function() {
+rpc.null_type = function () {
   /**
    * @type {flatbuffers.ByteBuffer}
    */
@@ -422,9 +424,9 @@ smf.rpc.null_type = function() {
 /**
  * @param {number} i
  * @param {flatbuffers.ByteBuffer} bb
- * @returns {smf.rpc.null_type}
+ * @returns {rpc.null_type}
  */
-smf.rpc.null_type.prototype.__init = function(i, bb) {
+rpc.null_type.prototype.__init = function (i, bb) {
   this.bb_pos = i;
   this.bb = bb;
   return this;
@@ -432,17 +434,17 @@ smf.rpc.null_type.prototype.__init = function(i, bb) {
 
 /**
  * @param {flatbuffers.ByteBuffer} bb
- * @param {smf.rpc.null_type=} obj
- * @returns {smf.rpc.null_type}
+ * @param {rpc.null_type=} obj
+ * @returns {rpc.null_type}
  */
-smf.rpc.null_type.getRootAsnull_type = function(bb, obj) {
-  return (obj || new smf.rpc.null_type).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+rpc.null_type.getRootAsnull_type = function (bb, obj) {
+  return (obj || new rpc.null_type).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 };
 
 /**
  * @param {flatbuffers.Builder} builder
  */
-smf.rpc.null_type.startnull_type = function(builder) {
+rpc.null_type.startnull_type = function (builder) {
   builder.startObject(0);
 };
 
@@ -450,10 +452,7 @@ smf.rpc.null_type.startnull_type = function(builder) {
  * @param {flatbuffers.Builder} builder
  * @returns {flatbuffers.Offset}
  */
-smf.rpc.null_type.endnull_type = function(builder) {
+rpc.null_type.endnull_type = function (builder) {
   var offset = builder.endObject();
   return offset;
 };
-
-// Exports for Node.js and RequireJS
-this.smf = smf;

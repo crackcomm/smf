@@ -4,7 +4,7 @@
   "description": "smf node.js implementation",
   "license": "Apache-2.0",
   "keywords": [
-    "ipfn"
+    "smf"
   ],
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
