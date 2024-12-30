@@ -3,6 +3,7 @@
 
 // vars,  Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
+
 #include "cpp_generator.h"
 
 #include "absl/log/check.h"
@@ -13,9 +14,10 @@
 #include <sstream>
 
 namespace smf_gen {
-namespace utils {
 
-static std::string
+namespace {
+
+std::string
 file_name_identifier(const std::string &filename) {
   std::string result;
   for (unsigned i = 0; i < filename.size(); i++) {
@@ -25,7 +27,7 @@ file_name_identifier(const std::string &filename) {
     } else if (c == '_') {
       result.push_back(c);
     } else {
-      static char hex[] = "0123456789abcdef";
+      constexpr char hex[] = "0123456789abcdef";
       result.push_back('_');
       result.push_back(hex[(c >> 4) & 0xf]);
       result.push_back(hex[c & 0xf]);
@@ -74,7 +76,7 @@ proper_prefix_token(std::string prefix, std::string s) {
   return lower_vec({prefix, std::string("_"), s});
 }
 
-static void
+void
 print_header_service_ctor_dtor(smf_printer &printer,
                                const smf_service *service) {
   VLOG(1) << "print_header_service_ctor_dtor for service: " << service->name();
@@ -118,7 +120,7 @@ print_header_service_ctor_dtor(smf_printer &printer,
   printer.print("}} {}\n");
 }
 
-static void
+void
 print_header_service_handle_request_id(smf_printer &printer,
                                        const smf_service *service) {
   printer.print("virtual smf::rpc_service_method_handle *\n"
@@ -144,7 +146,7 @@ print_header_service_handle_request_id(smf_printer &printer,
   printer.print("}\n");
 }
 
-static void
+void
 print_header_service_handles(smf_printer &printer, const smf_service *service) {
   std::map<std::string, std::string> vars;
   vars["ServiceHandleSize"] = std::to_string(service->methods().size());
@@ -158,7 +160,7 @@ print_header_service_handles(smf_printer &printer, const smf_service *service) {
   printer.print("}\n");
 }
 
-static void
+void
 print_header_service_method(smf_printer &printer, const smf_method *method) {
   VLOG(1) << "print_header_service_method: " << method->name();
 
@@ -209,7 +211,7 @@ print_header_service_method(smf_printer &printer, const smf_method *method) {
   printer.print("}\n");
 }
 
-static void
+void
 print_header_service(smf_printer &printer, const smf_service *service) {
   VLOG(1) << "print_header_service: " << service->name();
   std::map<std::string, std::string> vars{};
@@ -258,7 +260,7 @@ print_header_service(smf_printer &printer, const smf_service *service) {
   printer.print(vars, "}; // end of service: $Service$\n");
 }
 
-static void
+void
 print_header_client_method(smf_printer &printer, const smf_method *method) {
   std::map<std::string, std::string> vars;
   vars["RawMethodName"] = proper_prefix_token("raw", method->name());
@@ -291,7 +293,7 @@ print_header_client_method(smf_printer &printer, const smf_method *method) {
   printer.print("}\n");
 }
 
-static void
+void
 print_header_client(smf_printer &printer, const smf_service *service) {
   // print the client rpc code
   VLOG(1) << "print_header_client for service: " << service->name();
@@ -332,7 +334,7 @@ print_header_client(smf_printer &printer, const smf_service *service) {
   printer.print(vars, "}; // end of rpc client: $ClientName$\n");
   printer.outdent();
 }
-static void
+void
 print_std_ostream_services(smf_printer &printer, const smf_service *service) {
   VLOG(1) << "print_std_ostream_services: " << service->name();
   std::map<std::string, std::string> vars{};
@@ -371,12 +373,7 @@ print_std_ostream_services(smf_printer &printer, const smf_service *service) {
   printer.outdent();
   printer.print("} // namespace std\n");
 }
-}  // namespace utils
-}  // namespace smf_gen
-
-namespace smf_gen {
-
-using namespace smf_gen::utils;  // NOLINT
+}  // namespace
 
 void
 cpp_generator::generate_header_prologue() {

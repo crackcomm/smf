@@ -22,6 +22,7 @@ ABSL_FLAG(std::string, language, "cpp",
           "coma separated list of language to generate: go, cpp");
 ABSL_FLAG(std::string, output_path, ".", "output path of the generated files");
 
+namespace {
 std::vector<std::string>
 split_coma(const std::string &dirs) {
   std::vector<std::string> retval;
@@ -51,6 +52,7 @@ split_langs(const std::string &lang) {
   }
   return retval;
 }
+}  // namespace
 
 int
 main(int argc, char **argv, char **env) {

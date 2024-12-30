@@ -35,6 +35,7 @@ rpc_recv_context::rpc_recv_context(rpc_recv_context &&o) noexcept
 
 rpc_recv_context::~rpc_recv_context() {}
 
+namespace {
 constexpr uint32_t
 max_flatbuffers_size() {
   // 2GB - 1 is the max a flatbuffers::vector<uint8_t> can hold
@@ -43,6 +44,7 @@ max_flatbuffers_size() {
   using namespace flatbuffers;  // NOLINT
   return static_cast<uint32_t>(FLATBUFFERS_MAX_BUFFER_SIZE);
 }
+}  // namespace
 
 seastar::future<std::optional<rpc_recv_context>>
 rpc_recv_context::parse_payload(rpc_connection *conn, rpc::header hdr) {

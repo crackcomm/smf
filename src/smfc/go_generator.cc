@@ -10,15 +10,15 @@
 
 namespace smf_gen {
 
-// helpers
+namespace {
 
-static inline std::string
+inline std::string
 go_public_name(std::string s) {
   s[0] = std::toupper(s[0]);
   return s;
 }
 
-static void
+void
 print_server_method(smf_printer &printer, const smf_method *method) {
   std::map<std::string, std::string> vars;
   vars["InterfaceName"] = go_public_name(method->service_name());
@@ -37,7 +37,7 @@ print_server_method(smf_printer &printer, const smf_method *method) {
   printer.print("}\n\n");
 }
 
-static void
+void
 print_server_jump_table(smf_printer &printer, const smf_service *service) {
   std::map<std::string, std::string> vars;
   vars["InterfaceName"] = go_public_name(service->name());
@@ -66,7 +66,8 @@ print_server_jump_table(smf_printer &printer, const smf_service *service) {
   printer.outdent();
   printer.print("}\n\n");
 }
-static void
+
+void
 print_server(smf_printer &printer, const smf_service *service) {
   VLOG(1) << "print_server";
   std::map<std::string, std::string> vars;
@@ -127,7 +128,7 @@ print_server(smf_printer &printer, const smf_service *service) {
   }
 }
 
-static void
+void
 print_client_method(smf_printer &printer, const smf_method *method) {
   std::map<std::string, std::string> vars;
   vars["InterfaceName"] = go_public_name(method->service_name());
@@ -163,7 +164,7 @@ print_client_method(smf_printer &printer, const smf_method *method) {
   printer.print("}\n");
 }
 
-static void
+void
 print_client(smf_printer &printer, const smf_service *service) {
   VLOG(1) << "print_client";
   std::map<std::string, std::string> vars;
@@ -193,7 +194,7 @@ print_client(smf_printer &printer, const smf_service *service) {
   }
 }
 
-// members
+}  // namespace
 
 void
 go_generator::generate_header_prologue() {

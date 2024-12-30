@@ -10,6 +10,7 @@
 
 namespace smf_gen {
 
+namespace {
 static inline std::string
 python_public_name(std::string s) {
   s[0] = std::toupper(s[0]);
@@ -60,6 +61,7 @@ print_client(smf_printer &printer, const smf_service *service) {
     if ((i + 1) < service->methods().size()) { printer.print("\n"); }
   }
 }
+}  // namespace
 
 void
 python_generator::generate_header_prologue() {
