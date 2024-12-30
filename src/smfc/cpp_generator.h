@@ -1,15 +1,14 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
+
 #pragma once
+
 #include "generator.h"
 
 #include <flatbuffers/flatbuffers.h>
 #include <flatbuffers/idl.h>
 #include <flatbuffers/util.h>
-#include <glog/logging.h>
 
-#include <fstream>
-#include <iostream>
 #include <string>
 
 namespace smf_gen {

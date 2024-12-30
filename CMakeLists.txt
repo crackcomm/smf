@@ -66,8 +66,7 @@ endif()
 
 find_package(Seastar REQUIRED)
 find_package(Flatbuffers REQUIRED)
-find_package(gflags REQUIRED)
-find_package(glog REQUIRED)
+find_package(absl REQUIRED)
 find_package(Boost COMPONENTS
   system
   filesystem

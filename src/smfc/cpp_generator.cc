@@ -5,9 +5,9 @@
 //
 #include "cpp_generator.h"
 
+#include "absl/log/check.h"
+#include "absl/log/log.h"
 #include "smf_printer.h"
-
-#include <glog/logging.h>
 
 #include <map>
 #include <sstream>
@@ -393,8 +393,8 @@ cpp_generator::generate_header_prologue() {
   printer_.print("// Any local changes WILL BE LOST.\n");
   printer_.print(vars, "// source: $filename$\n");
   for (auto &p : included_files()) {
-    if (p.first == input_filename) { continue; }
-    vars["header"] = p.first;
+    if (p.second == input_filename) { continue; }
+    vars["header"] = p.second;
     printer_.print(vars, "// transitive fbs: $header$\n");
   }
   printer_.print("#pragma once\n");

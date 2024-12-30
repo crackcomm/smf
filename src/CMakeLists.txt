@@ -11,8 +11,8 @@ set(SMFC_LIBS
   Flatbuffers::flatbuffers
   Boost::system
   Boost::filesystem
-  gflags_static
-  glog::glog
+  absl::log
+  absl::flags
   ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(smfc ${SMFC_SOURCES})

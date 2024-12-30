@@ -3,12 +3,12 @@
 
 #include "codegen.h"
 
+#include "absl/log/log.h"
 #include "cpp_generator.h"
 #include "go_generator.h"
 #include "python_generator.h"
 
 #include <boost/filesystem.hpp>
-#include <glog/logging.h>
 
 namespace smf_gen {
 

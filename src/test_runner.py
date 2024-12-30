@@ -55,11 +55,12 @@ def test_environ():
     ld_path = ""
     if "LD_LIBRARY_PATH" in e:
         ld_path = e["LD_LIBRARY_PATH"]
-    e["GLOG_logtostderr"] = '1'
-    e["GLOG_v"] = '1'
-    e["GLOG_vmodule"] = ''
-    e["GLOG_logbufsecs"] = '0'
-    e["GLOG_log_dir"] = '.'
+    # Migrating to absl logging and not sure these are valid
+    e["ABSL_LOG_STDERR_THRESHOLD"] = 'INFO' 
+    e["ABSL_LOG_V"] = '1'                  
+    e["ABSL_VMODULE"] = ''                 
+    e["ABSL_LOG_FLUSH_SECONDS"] = '0'      
+    e["ABSL_LOG_DIR"] = '.'                
     e["GTEST_COLOR"] = 'no'
     e["GTEST_SHUFFLE"] = '1'
     e["GTEST_BREAK_ON_FAILURE"] = '1'

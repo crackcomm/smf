@@ -3,7 +3,7 @@
 
 #include "go_generator.h"
 
-#include <glog/logging.h>
+#include "absl/log/log.h"
 
 #include <memory>
 #include <string>

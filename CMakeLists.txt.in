@@ -368,31 +368,17 @@ ExternalProject_Add(gtest
     -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@
     -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>)
 
-ExternalProject_Add(gflags
-  URL https://github.com/gflags/gflags/archive/1005485222e8b0feff822c5723ddcaa5abadc01a.tar.gz
-  URL_MD5 25582b81561bb2f1d2c05e05b4b566a8
+ExternalProject_Add(absl
+  GIT_REPOSITORY https://github.com/abseil/abseil-cpp.git
+  GIT_TAG 93ac3a4f9ee7792af399cebd873ee99ce15aed08
   INSTALL_DIR    @SMF_DEPS_INSTALL_DIR@
   CMAKE_ARGS
     -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@
     -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
     -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
     -DBUILD_SHARED_LIBS=OFF
-    -DBUILD_STATIC_LIBS=ON
-    -DBUILD_gflags_LIB=ON
     -DBUILD_TESTING=OFF
-    -DBUILD_PACKAGING=OFF)
-
-ExternalProject_Add(glog
-  URL https://github.com/google/glog/archive/5d46e1bcfc92bf06a9ca3b3f1c5bb1dc024d9ecd.tar.gz
-  URL_MD5 548900b10c18b2b7a43ae8960ec3a777
-  INSTALL_DIR    @SMF_DEPS_INSTALL_DIR@
-  CMAKE_ARGS
-    -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@
-    -DCMAKE_PREFIX_PATH=<INSTALL_DIR>
-    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-    -DBUILD_SHARED_LIBS=OFF
-    -DWITH_GFLAGS=ON
-  DEPENDS gflags)
+    -DABSL_ENABLE_INSTALL=ON)
 
 ExternalProject_Add(googlebenchmark
   URL https://github.com/google/benchmark/archive/f91b6b42b1b9854772a90ae9501464a161707d1e.tar.gz

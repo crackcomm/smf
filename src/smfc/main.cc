@@ -1,22 +1,26 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "absl/flags/usage.h"
+#include "absl/log/globals.h"
+#include "absl/log/initialize.h"
+#include "absl/log/log.h"
 #include "codegen.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 #include <flatbuffers/flatbuffers.h>
 #include <flatbuffers/util.h>
-#include <gflags/gflags.h>
-#include <glog/logging.h>
 
 #include <memory>
 #include <vector>
 
-DEFINE_string(filename, "", "filename to parse");
-DEFINE_string(include_dirs, "", "extra include directories");
-DEFINE_string(language, "cpp",
-              "coma separated list of language to generate: go, cpp");
-DEFINE_string(output_path, ".", "output path of the generated files");
+ABSL_FLAG(std::string, filename, "", "filename to parse");
+ABSL_FLAG(std::string, include_dirs, "", "extra include directories");
+ABSL_FLAG(std::string, language, "cpp",
+          "coma separated list of language to generate: go, cpp");
+ABSL_FLAG(std::string, output_path, ".", "output path of the generated files");
 
 std::vector<std::string>
 split_coma(const std::string &dirs) {
@@ -50,41 +54,44 @@ split_langs(const std::string &lang) {
 
 int
 main(int argc, char **argv, char **env) {
-  google::SetUsageMessage("Generate smf services");
-  google::ParseCommandLineFlags(&argc, &argv, true);
-  google::InstallFailureSignalHandler();
-  google::InitGoogleLogging(argv[0]);
+  absl::SetProgramUsageMessage("Generate smf services");
+  absl::ParseCommandLine(argc, argv);
+  absl::InitializeLog();
+  absl::SetStderrThreshold(absl::LogSeverity::kInfo);
+
+  const auto filename = absl::GetFlag(FLAGS_filename);
+  const auto include_dirs = absl::GetFlag(FLAGS_include_dirs);
+  const auto language = absl::GetFlag(FLAGS_language);
+  auto output_path = absl::GetFlag(FLAGS_output_path);
 
   // validate flags
-  if (FLAGS_filename.empty()) {
+  if (filename.empty()) {
     LOG(ERROR) << "No filename to parse";
-    std::exit(1);
+    return 1;
   }
-  if (!boost::filesystem::exists(FLAGS_filename)) {
-    LOG(ERROR) << " ` " << FLAGS_filename
+  if (!boost::filesystem::exists(filename)) {
+    LOG(ERROR) << " ` " << filename
                << " ' - does not exists or could not be found";
-    std::exit(1);
+    return 1;
   }
-  if (FLAGS_output_path.empty()) {
-    LOG(ERROR) << " ` " << FLAGS_output_path << " ' - empty output path";
-    std::exit(1);
+  if (output_path.empty()) {
+    LOG(ERROR) << " ` " << output_path << " ' - empty output path";
+    return 1;
   }
-  FLAGS_output_path =
-    boost::filesystem::canonical(FLAGS_output_path.c_str()).string();
-  if (!flatbuffers::DirExists(FLAGS_output_path.c_str())) {
-    LOG(ERROR) << "--output_path specified, but directory: "
-               << FLAGS_output_path << " does not exist;";
-    std::exit(1);
+  output_path = boost::filesystem::canonical(output_path.c_str()).string();
+  if (!boost::filesystem::is_directory(output_path)) {
+    LOG(ERROR) << "--output_path specified, but " << output_path
+               << " is not a directory";
+    return 1;
   }
 
   auto codegenerator = std::make_unique<smf_gen::codegen>(
-    FLAGS_filename, FLAGS_output_path, split_coma(FLAGS_include_dirs),
-    split_langs(FLAGS_language));
+    filename, output_path, split_coma(include_dirs), split_langs(language));
   // generate code!
   auto status = codegenerator->parse();
   if (status) {
     LOG(ERROR) << "Failed to parse file: " << status.value();
-    std::exit(1);
+    return 1;
   }
   if (codegenerator->service_count() == 0) {
     LOG(INFO) << "No services need to be generated";
@@ -94,7 +101,7 @@ main(int argc, char **argv, char **env) {
   status = codegenerator->gen();
   if (status) {
     LOG(ERROR) << "Errors generating code: " << *status;
-    std::exit(1);
+    return 1;
   }
   VLOG(1) << "Success";
   return 0;

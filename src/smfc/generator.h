@@ -45,7 +45,7 @@ class generator {
   const std::string &input_filename;
   const std::string &output_dir;
 
-  virtual const std::map<std::string, std::set<std::string>> &
+  virtual const std::map<std::string, std::set<flatbuffers::IncludedFile>> &
   fbs_files_included_per_file() const final {
     return parser.files_included_per_file_;
   }
@@ -53,7 +53,7 @@ class generator {
   native_included_files() const final {
     return parser.native_included_files_;
   }
-  virtual const std::map<std::string, std::string> &
+  virtual const std::map<uint64_t, std::string> &
   included_files() const final {
     return parser.included_files_;
   };
