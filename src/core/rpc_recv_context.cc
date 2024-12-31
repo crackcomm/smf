@@ -12,7 +12,7 @@
 // after upgrade our build system to upstream cmake
 #include "smf/log.h"
 #include "smf/rpc_generated.h"
-#include "smf/rpc_header_ostream.h"
+#include "smf/rpc_header_ostream.h"  // IWYU pragma: keep
 #include "smf/rpc_header_utils.h"
 
 #include <seastar/core/reactor.hh>

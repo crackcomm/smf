@@ -1,7 +1,10 @@
 // Copyright (c) 2018 Alexander Gallego. All rights reserved.
 //
 #pragma once
+
 #include "smf/rpc_generated.h"
+
+#include <fmt/ostream.h>  // IWYU pragma: keep
 
 #include <bitset>
 #include <iostream>
@@ -18,3 +21,6 @@ operator<<(ostream &o, const ::smf::rpc::header &h) {
   return o;
 }
 }  // namespace std
+
+template <>
+struct fmt::formatter<::smf::rpc::header> : ostream_formatter {};
