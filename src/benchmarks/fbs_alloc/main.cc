@@ -6,17 +6,18 @@
 // Important as we upgrade / change the flatbuffers versions or their internal
 // API changes
 // The result is wrapped up in the native_type_utils.h
-#include <cstring>
-#include <memory>
-#include <thread>
+#include "kv_generated.h"
+#include "smf/native_type_utils.h"
 
-#include <benchmark/benchmark.h>
 #include <seastar/core/print.hh>
 #include <seastar/core/sstring.hh>
 #include <seastar/core/temporary_buffer.hh>
 
-#include "kv_generated.h"
-#include "smf/native_type_utils.h"
+#include <benchmark/benchmark.h>
+
+#include <cstring>
+#include <memory>
+#include <thread>
 
 static inline kvpairT
 gen_kv(uint32_t sz) {

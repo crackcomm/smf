@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include <memory>
-
 #include <seastar/core/future.hh>
 
 #include <smf/histogram.h>
+
+#include <memory>
 
 namespace smf {
 class unique_histogram_adder {

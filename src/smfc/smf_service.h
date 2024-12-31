@@ -1,13 +1,15 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
-#pragma once
-#include <memory>
-#include <string>
 
-#include <flatbuffers/idl.h>
+#pragma once
 
 #include "crc.h"
 #include "smf_method.h"
+
+#include <flatbuffers/idl.h>
+
+#include <memory>
+#include <string>
 
 namespace smf_gen {
 class smf_service {

@@ -1,11 +1,11 @@
 // Copyright 2018 Alexander Gallego
 //
 
+#include <benchmark/benchmark.h>
+
 #include <cstring>
 #include <memory>
 #include <thread>
-
-#include <benchmark/benchmark.h>
 #include <xxhash.h>
 
 static constexpr uint32_t kPayloadSize = 1 << 29;

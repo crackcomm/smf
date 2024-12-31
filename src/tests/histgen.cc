@@ -1,9 +1,7 @@
 // Copyright 2019 SMF Authors
 //
 
-#include <chrono>
-#include <iostream>
-#include <random>
+#include "smf/histogram.h"
 
 #include <seastar/core/app-template.hh>
 #include <seastar/core/distributed.hh>
@@ -12,7 +10,9 @@
 #include <seastar/core/reactor.hh>
 #include <seastar/http/httpd.hh>
 
-#include "smf/histogram.h"
+#include <chrono>
+#include <iostream>
+#include <random>
 
 struct histgen_server_args {
   seastar::sstring ip = "";

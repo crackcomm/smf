@@ -3,11 +3,12 @@
 
 #pragma once
 
-#include <flatbuffers/flatbuffers.h>
-#include <seastar/core/temporary_buffer.hh>
-
 #include "smf/log.h"
 #include "smf/macros.h"
+
+#include <seastar/core/temporary_buffer.hh>
+
+#include <flatbuffers/flatbuffers.h>
 
 namespace smf {
 
@@ -33,8 +34,14 @@ class fbs_typed_buf {
     cache_ = std::move(o.cache_);
     return *this;
   }
-  T *operator->() const { return cache_; }
-  T &operator*() const { return *cache_; }
+  T *
+  operator->() const {
+    return cache_;
+  }
+  T &
+  operator*() const {
+    return *cache_;
+  }
   T *
   get() const {
     return cache_;

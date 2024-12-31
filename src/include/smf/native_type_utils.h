@@ -3,11 +3,12 @@
 
 #pragma once
 
-#include <flatbuffers/flatbuffers.h>
+#include "smf/log.h"
+
 #include <seastar/core/print.hh>
 #include <seastar/core/temporary_buffer.hh>
 
-#include "smf/log.h"
+#include <flatbuffers/flatbuffers.h>
 
 namespace smf {
 /// \brief converts a flatbuffers::NativeTableType into a buffer.

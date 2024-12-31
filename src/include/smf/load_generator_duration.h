@@ -2,12 +2,12 @@
 //
 #pragma once
 
+#include "smf/histogram.h"
+#include "smf/human_bytes.h"
+
 #include <chrono>
 #include <iostream>
 #include <sstream>
-
-#include "smf/histogram.h"
-#include "smf/human_bytes.h"
 
 namespace smf {
 

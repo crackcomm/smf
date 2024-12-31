@@ -1,13 +1,13 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
 #pragma once
-#include <chrono>
-#include <ostream>
-
 #include <seastar/core/semaphore.hh>
 #include <seastar/core/timer.hh>
 
 #include <smf/human_bytes.h>
+
+#include <chrono>
+#include <ostream>
 
 namespace smf {
 /// Currently, it contains the limit to prase the body of the connection to be

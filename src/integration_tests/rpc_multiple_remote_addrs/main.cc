@@ -5,8 +5,9 @@
 #include <iostream>
 // linux
 #include <arpa/inet.h>
-#include <ifaddrs.h>
 #include <net/if.h>
+
+#include <ifaddrs.h>
 // seastar
 #include <seastar/core/app-template.hh>
 #include <seastar/core/distributed.hh>
@@ -41,8 +42,8 @@ ipv4_addr_to_ip_str(seastar::ipv4_addr addr) {
 struct client_info {
   explicit client_info(seastar::ipv4_addr ip)
     : client(seastar::make_shared<smf_gen::demo::SmfStorageClient>(ip)),
-      ip(ip.ip){};
-  client_info(client_info &&o) noexcept : client(o.client), ip(o.ip){};
+      ip(ip.ip) {};
+  client_info(client_info &&o) noexcept : client(o.client), ip(o.ip) {};
   ~client_info() = default;
   seastar::shared_ptr<smf_gen::demo::SmfStorageClient> client = nullptr;
   uint32_t ip = 0;

@@ -1,16 +1,17 @@
 // Copyright 2019 SMF Authors
 //
 
-#include <chrono>
+#include "smf/reconnect_client.h"
 
-#include <fmt/format.h>
 #include <seastar/core/app-template.hh>
 #include <seastar/core/reactor.hh>  // timer::arm/re-arm here
 #include <seastar/core/sleep.hh>
 #include <seastar/core/timer.hh>
+
+#include <fmt/format.h>
 #include <smf/log.h>
 
-#include "smf/reconnect_client.h"
+#include <chrono>
 // generated-templates
 #include "integration_tests/demo_service.smf.fb.h"
 

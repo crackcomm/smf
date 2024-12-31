@@ -1,12 +1,12 @@
 // Copyright 2018 SMF Authors
 //
 
-#include <cctype>
-#include <utility>
+#include "smf/random.h"
 
 #include <gtest/gtest.h>
 
-#include "smf/random.h"
+#include <cctype>
+#include <utility>
 
 TEST(bloom, random_alphanum) {
   smf::random r;

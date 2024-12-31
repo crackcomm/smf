@@ -2,9 +2,6 @@
 //
 #pragma once
 
-#include <seastar/core/shared_ptr.hh>
-#include <seastar/net/tls.hh>
-
 #include "smf/load_generator_duration.h"
 #include "smf/log.h"
 #include "smf/lz4_filter.h"
@@ -12,6 +9,9 @@
 #include "smf/rpc_client.h"
 #include "smf/rpc_envelope.h"
 #include "smf/zstd_filter.h"
+
+#include <seastar/core/shared_ptr.hh>
+#include <seastar/net/tls.hh>
 
 namespace smf {
 
@@ -22,9 +22,10 @@ struct load_channel {
   using generator_t = std::function<smf::rpc_envelope(
     const boost::program_options::variables_map &)>;
 
-  load_channel(uint64_t id, const char *ip, uint16_t port, uint64_t mem,
-               smf::rpc::compression_flags compression, 
-               seastar::shared_ptr<seastar::tls::certificate_credentials> credentials)
+  load_channel(
+    uint64_t id, const char *ip, uint16_t port, uint64_t mem,
+    smf::rpc::compression_flags compression,
+    seastar::shared_ptr<seastar::tls::certificate_credentials> credentials)
     : channel_id_(id) {
     smf::rpc_client_opts opts{};
     opts.server_addr = seastar::ipv4_addr{ip, port};

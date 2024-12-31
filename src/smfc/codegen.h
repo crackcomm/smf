@@ -2,15 +2,15 @@
 //
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
-#include <optional>
+#include "language.h"
 
 #include <flatbuffers/flatbuffers.h>
 #include <flatbuffers/idl.h>
 
-#include "language.h"
+#include <memory>
+#include <optional>
+#include <string>
+#include <vector>
 
 namespace smf_gen {
 
@@ -36,4 +36,5 @@ class codegen {
   std::unique_ptr<flatbuffers::Parser> parser_;
   bool parsed_ = false;
 };
+
 }  // namespace smf_gen

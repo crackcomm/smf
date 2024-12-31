@@ -1,13 +1,14 @@
 // Copyright 2019 SMF Authors
 //
 #pragma once
-#include <sstream>
-#include <string>
+
+#include "generator.h"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/filesystem.hpp>
 
-#include "generator.h"
+#include <sstream>
+#include <string>
 
 namespace smf_gen {
 

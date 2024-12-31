@@ -2,17 +2,18 @@
 //
 
 #pragma once
-#include <map>
-#include <memory>
-#include <set>
-#include <string>
-#include <optional>
+
+#include "smf_printer.h"
+#include "smf_service.h"
 
 #include <boost/filesystem.hpp>
 #include <flatbuffers/flatbuffers.h>
 
-#include "smf_printer.h"
-#include "smf_service.h"
+#include <map>
+#include <memory>
+#include <optional>
+#include <set>
+#include <string>
 
 namespace smf_gen {
 class generator {

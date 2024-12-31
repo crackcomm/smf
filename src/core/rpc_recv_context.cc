@@ -2,21 +2,21 @@
 //
 #include "smf/rpc_recv_context.h"
 
+#include <seastar/core/timer.hh>
+
 #include <chrono>
 #include <optional>
-
-#include <seastar/core/timer.hh>
 // seastar BUG: when compiling w/ -O3
 // some headers are not included on timer.hh
 // which causes missed impl symbols. We should revisit
 // after upgrade our build system to upstream cmake
-#include <seastar/core/reactor.hh>
-#include <seastar/util/noncopyable_function.hh>
-
 #include "smf/log.h"
 #include "smf/rpc_generated.h"
 #include "smf/rpc_header_ostream.h"
 #include "smf/rpc_header_utils.h"
+
+#include <seastar/core/reactor.hh>
+#include <seastar/util/noncopyable_function.hh>
 
 namespace smf {
 

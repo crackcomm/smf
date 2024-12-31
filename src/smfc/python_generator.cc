@@ -1,11 +1,12 @@
 // Copyright 2019 SMF Authors
 //
+
 #include "python_generator.h"
+
+#include <glog/logging.h>
 
 #include <memory>
 #include <string>
-
-#include <glog/logging.h>
 
 namespace smf_gen {
 

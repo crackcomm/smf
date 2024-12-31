@@ -4,10 +4,11 @@
 #ifndef SMF_PLATFORM_LOG_H
 #define SMF_PLATFORM_LOG_H
 
-#include <fmt/printf.h>
+#include "smf/macros.h"
+
 #include <seastar/util/log.hh>
 
-#include "smf/macros.h"
+#include <fmt/printf.h>
 
 namespace smf {
 struct internal_logger {
@@ -23,9 +24,9 @@ namespace log_detail {
 /// @sz must be inclusive
 static constexpr const char *
 find_last_slash(const char *file, std::size_t sz, char x) {
-  return sz == 0
-           ? file
-           : file[sz] == x ? &file[sz + 1] : find_last_slash(file, sz - 1, x);
+  return sz == 0         ? file
+         : file[sz] == x ? &file[sz + 1]
+                         : find_last_slash(file, sz - 1, x);
 }
 
 // A small helper for throw_if_null().
@@ -42,7 +43,7 @@ throw_if_null(const char *file, int line, const char *names, T *t) {
 
 template <typename... Args>
 inline void
-noop(Args &&... args) {
+noop(Args &&...args) {
   ((void)0);
 }
 }  // namespace log_detail

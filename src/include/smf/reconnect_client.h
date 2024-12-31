@@ -2,14 +2,14 @@
 //
 
 #pragma once
-#include <chrono>
-#include <type_traits>
-
 #include <seastar/core/sleep.hh>
 
 #include <smf/log.h>
 #include <smf/random.h>
 #include <smf/rpc_client.h>
+
+#include <chrono>
+#include <type_traits>
 
 namespace smf {
 enum class reconnect_backoff : uint16_t {

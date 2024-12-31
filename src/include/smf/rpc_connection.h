@@ -1,15 +1,15 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
 #pragma once
-#include <utility>
 #include <optional>
+#include <utility>
 // seastar
+#include "smf/macros.h"
+#include "smf/rpc_connection_limits.h"
+
 #include <seastar/core/iostream.hh>
 #include <seastar/core/shared_ptr.hh>
 #include <seastar/net/api.hh>
-
-#include "smf/macros.h"
-#include "smf/rpc_connection_limits.h"
 
 namespace smf {
 

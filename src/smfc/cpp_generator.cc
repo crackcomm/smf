@@ -5,12 +5,12 @@
 //
 #include "cpp_generator.h"
 
-#include <map>
-#include <sstream>
+#include "smf_printer.h"
 
 #include <glog/logging.h>
 
-#include "smf_printer.h"
+#include <map>
+#include <sstream>
 
 namespace smf_gen {
 namespace utils {
@@ -440,10 +440,13 @@ cpp_generator::generate_header_prologue_includes() {
   VLOG(1) << "get_header_includes";
   std::map<std::string, std::string> vars;
   static const std::vector<std::string> headers = {
-        "ostream", "seastar/core/sstring.hh",
-        "smf/rpc_service.h",
-        "smf/rpc_client.h", "smf/rpc_recv_typed_context.h",
-        "smf/rpc_typed_envelope.h", "smf/log.h" };
+    "ostream",
+    "seastar/core/sstring.hh",
+    "smf/rpc_service.h",
+    "smf/rpc_client.h",
+    "smf/rpc_recv_typed_context.h",
+    "smf/rpc_typed_envelope.h",
+    "smf/log.h"};
 
   for (auto &hdr : headers) {
     vars["header"] = hdr;

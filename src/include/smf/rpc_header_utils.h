@@ -2,9 +2,9 @@
 //
 
 #pragma once
-#include <xxhash.h>
-
 #include "smf/rpc_generated.h"
+
+#include <xxhash.h>
 
 namespace smf {
 

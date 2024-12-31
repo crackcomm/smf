@@ -1,10 +1,10 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
 #pragma once
-#include <chrono>
-
 #include <seastar/core/lowres_clock.hh>
 #include <seastar/core/sstring.hh>
+
+#include <chrono>
 
 namespace smf {
 inline uint64_t

@@ -1,16 +1,16 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
 #pragma once
-#include <cassert>
-#include <chrono>
-#include <memory>
-#include <utility>
+#include "smf/macros.h"
 
-#include <hdr_histogram.h>
 #include <seastar/core/metrics_types.hh>
 #include <seastar/core/shared_ptr.hh>
 
-#include "smf/macros.h"
+#include <cassert>
+#include <chrono>
+#include <hdr_histogram.h>
+#include <memory>
+#include <utility>
 
 namespace smf {
 class histogram;

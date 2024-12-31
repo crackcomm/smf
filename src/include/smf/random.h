@@ -2,10 +2,10 @@
 //
 #pragma once
 
+#include <seastar/core/sstring.hh>
+
 #include <cstdint>
 #include <random>
-
-#include <seastar/core/sstring.hh>
 
 namespace smf {
 class random {

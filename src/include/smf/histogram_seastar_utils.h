@@ -2,11 +2,11 @@
 //
 #pragma once
 
-#include <cstdio>
+#include "smf/histogram.h"
 
 #include <seastar/core/fstream.hh>
 
-#include "smf/histogram.h"
+#include <cstdio>
 
 namespace smf {
 struct histogram_seastar_utils {

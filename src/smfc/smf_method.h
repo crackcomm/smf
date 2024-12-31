@@ -1,14 +1,14 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
 #pragma once
-#include <deque>
-#include <memory>
+
+#include "crc.h"
+#include "language.h"
 
 #include <boost/algorithm/string/join.hpp>
 #include <flatbuffers/idl.h>
 
-#include "crc.h"
-#include "language.h"
+#include <deque>
 
 namespace smf_gen {
 class smf_method {

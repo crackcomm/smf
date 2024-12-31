@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include <cstdint>
-
 #include <seastar/core/sstring.hh>
 #include <seastar/core/timer.hh>
 #include <seastar/net/tls.hh>
+
+#include <cstdint>
 
 namespace smf {
 enum rpc_server_flags : uint32_t { rpc_server_flags_disable_http_server = 1 };

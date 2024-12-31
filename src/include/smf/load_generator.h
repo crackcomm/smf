@@ -2,16 +2,16 @@
 //
 #pragma once
 
-#include <algorithm>
-#include <memory>
-
-#include <seastar/core/shared_ptr.hh>
-
 #include "smf/load_generator_args.h"
 #include "smf/load_generator_duration.h"
 #include "smf/macros.h"
 #include "smf/random.h"
 #include "smf/rpc_envelope.h"
+
+#include <seastar/core/shared_ptr.hh>
+
+#include <algorithm>
+#include <memory>
 
 namespace smf {
 
@@ -64,13 +64,13 @@ class __attribute__((visibility("default"))) load_generator {
   seastar::future<>
   stop() {
     return seastar::parallel_for_each(channels_.begin(), channels_.end(),
-                                [](auto &c) { return c->stop(); });
+                                      [](auto &c) { return c->stop(); });
   }
   seastar::future<>
   connect() {
     LOG_INFO("Making {} connections on this core.", channels_.size());
     return seastar::parallel_for_each(channels_.begin(), channels_.end(),
-                                [](auto &c) { return c->connect(); });
+                                      [](auto &c) { return c->connect(); });
   }
   seastar::future<load_generator_duration>
   benchmark(generator_cb_t gen, method_cb_t method_cb) {

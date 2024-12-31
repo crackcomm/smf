@@ -2,12 +2,12 @@
 //
 #include "smf/zstd_filter.h"
 
-#include <utility>
-
 #include "smf/compression.h"
 #include "smf/log.h"
 #include "smf/rpc_header_utils.h"
 #include "smf/rpc_recv_context.h"
+
+#include <utility>
 
 namespace smf {
 

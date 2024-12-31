@@ -1,6 +1,11 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
+
 #pragma once
+
+#include <cassert>
+#include <cstdint>
+#include <cstring>
 #include <map>
 #include <string>
 

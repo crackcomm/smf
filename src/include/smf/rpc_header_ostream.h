@@ -1,10 +1,10 @@
 // Copyright (c) 2018 Alexander Gallego. All rights reserved.
 //
 #pragma once
+#include "smf/rpc_generated.h"
+
 #include <bitset>
 #include <iostream>
-
-#include "smf/rpc_generated.h"
 
 namespace std {
 inline ostream &

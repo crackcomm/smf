@@ -2,12 +2,12 @@
 //
 #pragma once
 
-#include <iostream>
-
 #include "smf/macros.h"
 #include "smf/rpc_envelope.h"
 #include "smf/rpc_recv_context.h"
 #include "smf/rpc_service.h"
+
+#include <iostream>
 
 namespace smf {
 /// \brief used to host many services

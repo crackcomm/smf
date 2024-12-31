@@ -1,8 +1,6 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
-#include <iostream>
-#include <memory>
-#include <vector>
+#include "codegen.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
@@ -11,7 +9,8 @@
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 
-#include "codegen.h"
+#include <memory>
+#include <vector>
 
 DEFINE_string(filename, "", "filename to parse");
 DEFINE_string(include_dirs, "", "extra include directories");

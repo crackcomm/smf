@@ -3,10 +3,10 @@
 
 #pragma once
 
-#include <memory>
-
 #include <seastar/core/shared_ptr.hh>
 #include <seastar/core/temporary_buffer.hh>
+
+#include <memory>
 
 // modeled after the folly::io::compression.h
 

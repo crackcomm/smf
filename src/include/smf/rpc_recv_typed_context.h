@@ -4,6 +4,7 @@
 
 #include "smf/macros.h"
 #include "smf/rpc_recv_context.h"
+
 #include <optional>
 
 namespace smf {
@@ -38,7 +39,10 @@ class rpc_recv_typed_context {
     return *this;
   }
 
-  SMF_ALWAYS_INLINE T *operator->() { return cache_; }
+  SMF_ALWAYS_INLINE T *
+  operator->() {
+    return cache_;
+  }
   SMF_ALWAYS_INLINE T *
   get() const {
     return cache_;
@@ -65,7 +69,10 @@ class rpc_recv_typed_context {
   ///     if(obj){}
   /// \endcode
   /// simply forward the bool operator to the option
-  inline operator bool() const { return ctx.operator bool(); }
+  inline
+  operator bool() const {
+    return ctx.operator bool();
+  }
   opt_recv_ctx_t ctx;
   SMF_DISALLOW_COPY_AND_ASSIGN(rpc_recv_typed_context);
 

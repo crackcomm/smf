@@ -2,11 +2,11 @@
 //
 #pragma once
 
-#include <seastar/core/sstring.hh>
-#include <seastar/core/temporary_buffer.hh>
-
 #include "smf/macros.h"
 #include "smf/rpc_generated.h"
+
+#include <seastar/core/sstring.hh>
+#include <seastar/core/temporary_buffer.hh>
 
 namespace smf {
 

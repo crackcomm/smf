@@ -2,12 +2,14 @@
 //
 #pragma once
 
-#include <boost/program_options.hpp>
-#include <memory>
-#include <seastar/net/tls.hh>
-#include <vector>
+#include "smf/log.h"
 
-#include <smf/log.h>
+#include <seastar/net/tls.hh>
+
+#include <boost/program_options.hpp>
+
+#include <memory>
+#include <vector>
 
 namespace smf {
 // missing timeout

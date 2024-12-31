@@ -1,10 +1,12 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
+
 #include "smf/rpc_client.h"
+
+#include <seastar/core/future.hh>
 
 #include <memory>
 #include <optional>
-#include <seastar/core/future.hh>
 #include <utility>
 // seastar
 #include <seastar/core/execution_stage.hh>

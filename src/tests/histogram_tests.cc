@@ -1,13 +1,13 @@
 // Copyright 2018 SMF Authors
 //
 
-#include <cctype>
-#include <utility>
+#include "smf/histogram.h"
+#include "smf/random.h"
 
 #include <gtest/gtest.h>
 
-#include "smf/histogram.h"
-#include "smf/random.h"
+#include <cctype>
+#include <utility>
 
 static constexpr const int64_t kMaxValue = 10240;
 

@@ -1,16 +1,16 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
-#include <smf/rpc_envelope.h>
+
+#include "smf/rpc_envelope.h"
+
+#include "smf/log.h"
+#include "smf/rpc_generated.h"
+#include "smf/rpc_header_ostream.h"
+#include "smf/rpc_header_utils.h"
 
 #include <algorithm>
 #include <cstring>
 #include <utility>
-
-#include <smf/log.h>
-#include "smf/rpc_generated.h"
-
-#include "smf/rpc_header_ostream.h"
-#include "smf/rpc_header_utils.h"
 
 namespace smf {
 

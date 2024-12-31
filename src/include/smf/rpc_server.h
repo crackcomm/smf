@@ -2,18 +2,6 @@
 //
 #pragma once
 
-#include <algorithm>
-#include <type_traits>
-#include <unordered_map>
-#include <optional>
-
-#include <seastar/core/distributed.hh>
-#include <seastar/core/gate.hh>
-#include <seastar/core/metrics_registration.hh>
-#include <seastar/core/timer.hh>
-#include <seastar/http/httpd.hh>
-#include <seastar/net/tls.hh>
-
 #include "smf/histogram.h"
 #include "smf/macros.h"
 #include "smf/rpc_connection_limits.h"
@@ -23,6 +11,18 @@
 #include "smf/rpc_server_connection.h"
 #include "smf/rpc_server_stats.h"
 #include "smf/zstd_filter.h"
+
+#include <seastar/core/distributed.hh>
+#include <seastar/core/gate.hh>
+#include <seastar/core/metrics_registration.hh>
+#include <seastar/core/timer.hh>
+#include <seastar/http/httpd.hh>
+#include <seastar/net/tls.hh>
+
+#include <algorithm>
+#include <optional>
+#include <type_traits>
+#include <unordered_map>
 
 namespace smf {
 
@@ -50,7 +50,7 @@ class rpc_server {
 
   template <typename T, typename... Args>
   void
-  register_service(Args &&... args) {
+  register_service(Args &&...args) {
     static_assert(std::is_base_of<rpc_service, T>::value,
                   "register_service can only be called with a derived class of "
                   "smf::rpc_service");
@@ -58,13 +58,13 @@ class rpc_server {
   }
   template <typename Function, typename... Args>
   void
-  register_incoming_filter(Args &&... args) {
+  register_incoming_filter(Args &&...args) {
     in_filters_.push_back(Function(std::forward<Args>(args)...));
   }
 
   template <typename Function, typename... Args>
   void
-  register_outgoing_filter(Args &&... args) {
+  register_outgoing_filter(Args &&...args) {
     out_filters_.push_back(Function(std::forward<Args>(args)...));
   }
 

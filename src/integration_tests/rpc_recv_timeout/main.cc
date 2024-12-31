@@ -6,8 +6,8 @@
 // seastar
 #include <seastar/core/app-template.hh>
 #include <seastar/core/distributed.hh>
-#include <seastar/core/sleep.hh>
 #include <seastar/core/reactor.hh>
+#include <seastar/core/sleep.hh>
 #include <seastar/net/api.hh>
 // smf
 #include "integration_tests/non_root_port.h"

@@ -2,21 +2,22 @@
 //
 #pragma once
 // std
-#include <memory>
-#include <utility>
-#include <vector>
-#include <optional>
-#include <map>
-
-#include <seastar/core/gate.hh>
-#include <seastar/net/tls.hh>
-#include <seastar/core/shared_ptr.hh>
 #include "smf/histogram.h"
 #include "smf/macros.h"
 #include "smf/rpc_connection.h"
 #include "smf/rpc_envelope.h"
 #include "smf/rpc_filter.h"
 #include "smf/rpc_recv_typed_context.h"
+
+#include <seastar/core/gate.hh>
+#include <seastar/core/shared_ptr.hh>
+#include <seastar/net/tls.hh>
+
+#include <map>
+#include <memory>
+#include <optional>
+#include <utility>
+#include <vector>
 
 namespace smf {
 

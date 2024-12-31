@@ -2,10 +2,10 @@
 //
 #pragma once
 
-#include <seastar/util/noncopyable_function.hh>
-
 #include "smf/rpc_envelope.h"
 #include "smf/rpc_recv_context.h"
+
+#include <seastar/util/noncopyable_function.hh>
 
 namespace smf {
 // https://github.com/grpc/grpc/blob/d0fbba52d6e379b76a69016bc264b96a2318315f/include/grpc%2B%2B/impl/codegen/rpc_method.h

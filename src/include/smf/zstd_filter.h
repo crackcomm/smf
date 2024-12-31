@@ -1,7 +1,7 @@
 // Copyright (c) 2016 Alexander Gallego. All rights reserved.
 //
 #pragma once
-// smf
+
 #include "smf/rpc_envelope.h"
 #include "smf/rpc_filter.h"
 #include "smf/rpc_recv_context.h"
